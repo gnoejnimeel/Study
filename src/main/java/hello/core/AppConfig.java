@@ -14,22 +14,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
+    //@Bean memberService -> new MemberMemoryRepository()
+    //@Bean orderService -> new MemberMemoryRepository()
+
     @Bean
     public MemberService memberService() {
+        System.out.println("call AppConfig.memberService");
         //생성자를 통해서 주입
-        return new MemberServiceImpl(memoryRepository());
+        return new MemberServiceImpl(memberRepository());
         //스프링 컨테이너에 등록되며 등록된 객체를 스프링빈이라고 한다.
     }
 
-    //중복 Ctrl + Alt + M
     @Bean
-    public static MemberMemoryRepository memoryRepository() {
+    public static MemberMemoryRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemberMemoryRepository();
     }
 
     @Bean
     public OrderService orderService() {
-        return new OrderServiceImpl(memoryRepository(), discountPolicy());
+        System.out.println("call AppConfig.orderService");
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
     @Bean
